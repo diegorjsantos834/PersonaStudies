@@ -1,0 +1,331 @@
+/* ============================================================
+   1. RESET & CONFIGURAÇÕES GERAIS DA TELA
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Remove barras de rolagem */
+  user-select: none; /* Evita seleção acidental de texto */
+  background-color: #e3e3e3;
+  font-family: sans-serif;
+}
+
+/* ============================================================
+   2. STAGE PRINCIPAL DA ÁREA DE TRABALHO (DESKTOP)
+   ============================================================ */
+.desktop {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================================================
+   3. CAMADAS DE WALLPAPER & PARALLAX 3D
+   ============================================================ */
+.wallpaper_layers_containers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Regra geral para todas as camadas de fundo */
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Permite que o mouse clique através das camadas */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: transform 0.1s ease-out;
+}
+
+.layer img, 
+.layer canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Ordem de profundidade (Do fundo para a frente) */
+.layer_base_bg          { z-index: 0; }
+.layer_animated_scenery { z-index: 1; }
+.layer_canva_sounds     { z-index: 2; }
+.layer_static_scenery   { z-index: 3; }
+.layer_characters       { z-index: 4; }
+
+/* ============================================================
+   4. CONTAINER DA INTERFACE E WIDGETS (HUD)
+   ============================================================ */
+.ui_overlay_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Fica acima de todas as imagens e fundos */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Separa o topo e a base da tela */
+  padding: 30px;
+  pointer-events: none; /* Torna a área vazia transparente a cliques */
+}
+
+/* Restaura a interatividade (cliques) apenas para os elementos dos widgets */
+.ui_overlay_container * {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   5. SEÇÃO SUPERIOR (.top)
+   ============================================================ */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Widget Superior Esquerdo (Calendário, Data, Temperatura e Clima) */
+.widget-top-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.calendar-hud {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-display-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#hud-date-num {
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -2px;
+}
+
+.hud-temp-container {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.weather-emblem {
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekday-display-tag {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.timephase-display-tag {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Widget Superior Central (Cidade e Relógio Digital) */
+.widget-top-center {
+  text-align: center;
+}
+
+.city-clock-badge h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+#digital-clock {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Widget Superior Direito (Seletor de Temas com Logos) */
+.widget-top-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.theme-selector-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-theme {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-theme:hover {
+  transform: scale(1.15) rotate(-3deg);
+}
+
+.btn-theme img {
+  width: 48px;
+  height: auto;
+  display: block;
+}
+
+/* ============================================================
+   6. SEÇÃO INFERIOR (.bottom)
+   ============================================================ */
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  gap: 20px;
+}
+
+/* Layout base genérico para os cards dos widgets */
+.hud-card {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Widget Inferior Esquerdo (Timer / Pomodoro) */
+.widget-bottom-left {
+  min-width: 220px;
+}
+
+.card-title {
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.timer-display {
+  font-size: 2.6rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Widget Inferior Central (Busca de Cidade + Cards de Informação) */
+.widget-bottom-center {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 420px;
+  max-width: 100%;
+}
+
+.hud-search-box {
+  display: flex;
+  gap: 8px;
+}
+
+.hud-search-box input {
+  flex: 1;
+  padding: 8px 12px;
+  outline: none;
+  font-size: 1rem;
+}
+
+/* Card Multifuncional com Abas (Geral / Semanal / Mensal) */
+.card-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 4px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.tab-pane {
+  display: block;
+  padding-top: 8px;
+}
+
+.tab-pane.hidden {
+  display: none !important;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+/* Widget Inferior Direito (Player de Música) */
+.widget-bottom-right {
+  min-width: 250px;
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  max-width: 230px;
+  white-space: nowrap;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Botões Globais HUD */
+.hud-btn {
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.hud-btn:hover {
+  opacity: 0.85;
+}
+
+/* Utilitário para ocultar elementos */
+.hidden {
+  display: none !important;
+}

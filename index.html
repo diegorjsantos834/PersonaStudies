@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persona Study</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<!-- Tag body com classe theme para alteração de tema -->
+
+<body class="theme">
+
+    <!-- Conteúdo principal -->
+    <main class="desktop">
+
+        <!--  1º Grupo de camadas para o wallpaper (3d parallax) -->
+        <div class="wallpaper_layers_containers">
+
+            <!-- Camada 0: Cor padrão -->
+            <section class="layer_base_bg"></section>
+
+            <!-- Camada 1: cenario animado -->
+            <section class="layer_animated_scenery"></section>
+
+            <!-- Camada 2: Canva sounds -->
+            <section class="layer_canva_sounds"></section>
+
+            <!-- Camada 3: Cenario estático -->
+            <section class="layer_static_scenery"></section>
+
+            <!-- Camada 4: Personagens -->
+            <section class="layer_characters"></section>
+
+        </div>
+
+        <!-- Interface e widgets -->
+
+        <div class="ui_overlay_container">
+
+            <!-- Widgets superiores -->
+            <section class="top">
+
+                <!-- Widget esquerda -->
+                <!-- Cycle_day + weather -->
+                <div class="widget-top-left">
+                    <div class="calendar-hud">
+                        <div class="date-display-box">
+                            <span id="hud-date-num">7/22</span>
+
+                            <!-- Adicionado o elemento para os graus -->
+                            <div class="hud-temp-container">
+                                <span id="hud-temp-val">24°C</span>
+                            </div>
+
+                            <div id="hud-weather-icon" class="weather-emblem">☀️</div>
+                        </div>
+                        <div class="weekday-display-tag">
+                            <span id="hud-day-name">WedNESDay</span>
+                            <span id="hud-kanji">水</span>
+                        </div>
+                        <div class="timephase-display-tag">
+                            <span id="hud-period">Daytime</span>
+                        </div>
+                        <!-- Alerta de Clima (Ex: Heat Wave) -->
+                        <div id="hud-weather-warning" class="warning-tag hidden">
+                            <span id="warning-text">HEAT WAVE!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget_Centro -->
+                <!-- city +  clock-->
+                <div class="widget-top-center">
+                    <div class="city-clock-badge">
+                        <h1 id="current-city-name">SÃO PAULO</h1>
+                        <div id="digital-clock">19:31:05</div>
+                    </div>
+                </div>
+
+                <!-- Widget_Direita -->
+                <!-- theme_selector -->
+                <div class="widget-top-right">
+                    <nav class="theme-selector-buttons">
+                        <button class="btn-theme btn-theme-p5" onclick="switchTheme('p5')" title="Persona 5">
+                            <img src="assets/images/logos/p5_logo.jpg" alt="Persona 5" />
+                        </button>
+                        <button class="btn-theme btn-theme-p3" onclick="switchTheme('p3')" title="Persona 3">
+                            <img src="assets/images/logos/p3_logo.jpg" alt="Persona 3" />
+                        </button>
+                        <button class="btn-theme btn-theme-p4" onclick="switchTheme('p4')" title="Persona 4">
+                            <img src="assets/images/logos/p4_logo.jpg" alt="Persona 4" />
+                        </button>
+                    </nav>
+                </div>
+
+            </section>
+
+            <!-- Widgets inferiores -->
+            <section class="bottom">
+            
+                <!-- Widget esquerda -->
+                <!-- Cronometro -->
+                <div class="widget-bottom-left">
+                    <div class="hud-card timer-card">
+                        <h3 class="card-title">TIMER</h3>
+                        <div class="timer-display" id="timer-display">25:00</div>
+                        <div class="timer-controls">
+                            <button id="btn-start-timer" class="hud-btn">START</button>
+                            <button id="btn-reset-timer" class="hud-btn">RESET</button>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Widget Centro -->
+                <!-- Formulário de Pesquisa + Card de Previsão/Calendário -->
+                <div class="widget-bottom-center">
+                    <!-- Form de busca de cidade -->
+                    <form id="weather-search-form" class="hud-search-box">
+                        <input type="text" id="city-input" placeholder="Buscar Cidade..." autocomplete="off" />
+                        <button type="submit" class="hud-btn">BUSCAR</button>
+                    </form>
+            
+                    <!-- Card com abas (Geral, Semanal, Mensal) -->
+                    <div class="hud-card info-card">
+                        <div class="card-tabs">
+                            <button class="tab-btn active" data-tab="general">Geral</button>
+                            <button class="tab-btn" data-tab="weekly">Semanal</button>
+                            <button class="tab-btn" data-tab="monthly">Mensal</button>
+                        </div>
+            
+                        <div class="card-content">
+                            <!-- Aba Geral -->
+                            <div id="tab-general" class="tab-pane active">
+                                <div class="metric-row"><span>Temperatura:</span> <strong id="temp-val">--°C</strong></div>
+                                <div class="metric-row"><span>Umidade:</span> <strong id="humidity-val">--%</strong></div>
+                                <div class="metric-row"><span>Condição:</span> <strong id="condition-val">--</strong></div>
+                            </div>
+                            <!-- Aba Semanal -->
+                            <div id="tab-weekly" class="tab-pane hidden">
+                                <div id="weekly-forecast-list" class="forecast-grid"></div>
+                            </div>
+                            <!-- Aba Mensal -->
+                            <div id="tab-monthly" class="tab-pane hidden">
+                                <div id="monthly-calendar-view" class="calendar-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Widget Direita -->
+                <!-- Music -->
+                <div class="widget-bottom-right">
+                    <div class="hud-card music-card">
+                        <div class="track-info">
+                            <span class="music-icon">🎵</span>
+                            <marquee id="track-title" behavior="scroll" direction="left">Persona 5 - Last Surprise</marquee>
+                        </div>
+                        <div class="player-controls">
+                            <button id="prev-track" class="hud-btn">⏮</button>
+                            <button id="play-pause-track" class="hud-btn">▶</button>
+                            <button id="next-track" class="hud-btn">⏭</button>
+                        </div>
+                        <!-- Áudio oculto conectado à Web Audio API -->
+                        <audio id="persona-audio-player" crossOrigin="anonymous"></audio>
+                    </div>
+                </div>
+            
+            
+            
+            </section>
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>
