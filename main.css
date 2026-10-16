@@ -1,4 +1,12 @@
 /* ============================================================
+   MAIN.CSS - Base neutra + visual do tema PERSONA 5
+   - Seções 1-6: layout neutro (funciona em qualquer tema)
+   - Regras "body.theme-p5 ...": visual P5 (cards pretos, botões,
+     busca, player, seletor de temas) — some ao trocar de tema
+   - Camadas do wallpaper: seções com 104% (sobra p/ o parallax),
+     .wp-p5/.wp-p3 alternam a imagem por tema
+   ============================================================ */
+/* ============================================================
    1. RESET & CONFIGURAÇÕES GERAIS DA TELA
    ============================================================ */
 * {
@@ -13,7 +21,17 @@ html, body {
   overflow: hidden; /* Remove barras de rolagem */
   user-select: none; /* Evita seleção acidental de texto */
   background-color: #e3e3e3;
-  font-family: sans-serif;
+  font-family: "Arsenal", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.card-title,
+.hud-btn,
+.tab-btn,
+.city-clock-badge h1,
+#track-title,
+.timer-display {
+  letter-spacing: 0.15em;
 }
 
 /* ============================================================
@@ -38,13 +56,13 @@ html, body {
   z-index: 1;
 }
 
-/* Regra geral para todas as camadas de fundo */
-.layer {
+/* Regra geral para todas as camadas de fundo (104% p/ o parallax nunca expor as bordas) */
+.wallpaper_layers_containers section {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -2%;
+  left: -2%;
+  width: 104%;
+  height: 104%;
   pointer-events: none; /* Permite que o mouse clique através das camadas */
   background-position: center;
   background-repeat: no-repeat;
@@ -52,8 +70,8 @@ html, body {
   transition: transform 0.1s ease-out;
 }
 
-.layer img, 
-.layer canvas {
+.wallpaper_layers_containers section img,
+.wallpaper_layers_containers section canvas {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -63,9 +81,85 @@ html, body {
 /* Ordem de profundidade (Do fundo para a frente) */
 .layer_base_bg          { z-index: 0; }
 .layer_animated_scenery { z-index: 1; }
-.layer_canva_sounds     { z-index: 2; }
+.layer_canva_sounds     { z-index: 2; pointer-events: none; }
 .layer_static_scenery   { z-index: 3; }
 .layer_characters       { z-index: 4; }
+
+.layer_canva_sounds #sound-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.wallpaper_layers_containers section.layer_static_scenery img {
+  width: 102%;
+  height: 102%;
+  margin: -1% 0 0 -1%;
+  object-fit: fill;
+}
+/* P3: trem sem zoom — cover exato (a seção já tem 104% de sobra) */
+.wallpaper_layers_containers section.layer_static_scenery img.wp-p3 {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
+}
+/* P3: nuvens puxadas para o alto */
+.wallpaper_layers_containers section.layer_animated_scenery img.wp-p3 {
+  object-position: 50% 25%;
+}
+.wallpaper_layers_containers section.layer_animated_scenery {
+  overflow: hidden;
+  background: #0a0a12;
+}
+.wallpaper_layers_containers section.layer_animated_scenery img {
+  width: 116%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  animation: p5-pan 20s ease-in-out infinite alternate;
+}
+@keyframes p5-pan {
+  from { transform: translateX(0); }
+  to { transform: translateX(-11%); }
+}
+.wallpaper_layers_containers section.layer_characters {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 130px;
+  pointer-events: none;
+}
+.wallpaper_layers_containers section.layer_characters img {
+  width: auto;
+  height: auto;
+  max-height: 76vh;
+  max-width: 90vw;
+  object-fit: contain;
+  display: block;
+}
+body.theme-p5 .wallpaper_layers_containers section.layer_characters img.wp-p5 {
+  filter: drop-shadow(7px 7px 0 #e60023) drop-shadow(13px 13px 0 #000);
+}
+
+/* Camadas ocultas fora dos temas P5/P3 (o canvas aparece nos dois) */
+body:not(.theme-p5):not(.theme-p3) .layer_characters,
+body:not(.theme-p5):not(.theme-p3) .layer_canva_sounds {
+  display: none;
+}
+
+/* Wallpapers/personagens: cada tema mostra só o seu */
+.wallpaper_layers_containers section img.wp-p3 { display: none; }
+body.theme-p3 .wallpaper_layers_containers section img.wp-p5 { display: none; }
+body.theme-p3 .wallpaper_layers_containers section img.wp-p3 { display: block; }
+
+body.theme-p3 {
+  background-color: #0a1428;
+}
 
 /* ============================================================
    4. CONTAINER DA INTERFACE E WIDGETS (HUD)
@@ -95,9 +189,10 @@ html, body {
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
+  position: relative;
 }
 
-/* Widget Superior Esquerdo (Calendário, Data, Temperatura e Clima) */
+/* Widget Superior Esquerdo (Calendário P5 por sprites / data P3 por texto) */
 .widget-top-left {
   display: flex;
   flex-direction: column;
@@ -111,48 +206,27 @@ html, body {
   gap: 6px;
 }
 
-.date-display-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-#hud-date-num {
-  font-size: 3.5rem;
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: -2px;
-}
-
-.hud-temp-container {
-  font-size: 1.6rem;
-  font-weight: bold;
-}
-
-.weather-emblem {
-  font-size: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.weekday-display-tag {
-  font-size: 1.4rem;
-  font-weight: bold;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.timephase-display-tag {
-  font-size: 1.2rem;
-  font-weight: bold;
-  font-style: italic;
-}
-
 /* Widget Superior Central (Cidade e Relógio Digital) */
 .widget-top-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
   text-align: center;
+}
+
+body.theme-p5 .city-clock-badge {
+  background: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 5px 5px 0 #000;
+  padding: 8px 26px;
+  transform: rotate(-2deg) skewX(-6deg);
+}
+
+body.theme-p5 .city-clock-badge h1 {
+  color: #fff;
+  text-shadow: 2px 2px 0 #e60023;
 }
 
 .city-clock-badge h1 {
@@ -162,37 +236,64 @@ html, body {
   margin-bottom: 4px;
 }
 
-#digital-clock {
+body.theme-p5 #digital-clock {
   font-size: 1.4rem;
   font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
 }
 
-/* Widget Superior Direito (Seletor de Temas com Logos) */
-.widget-top-right {
+/* Widget Superior Direito (Seletor de Temas com Logos) - tema Persona 5 */
+body.theme-p5 .widget-top-right {
   display: flex;
   justify-content: flex-end;
 }
 
-.theme-selector-buttons {
+body.theme-p5 .theme-selector-buttons {
   display: flex;
   gap: 12px;
+  background: #000;
+  border: 3px solid #fff;
+  box-shadow: 5px 5px 0 #000;
+  padding: 10px 14px;
+  transform: rotate(2deg) translateY(6px);
 }
 
-.btn-theme {
-  background: transparent;
-  border: none;
+body.theme-p5 .btn-theme {
+  width: 60px;
+  height: 60px;
+  background: #000;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 0 #000;
+  padding: 0;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.btn-theme:hover {
-  transform: scale(1.15) rotate(-3deg);
+body.theme-p5 .btn-theme:nth-child(1) { transform: rotate(-3deg) translateY(-4px); }
+body.theme-p5 .btn-theme:nth-child(2) { transform: rotate(2deg) translateY(4px); }
+body.theme-p5 .btn-theme:nth-child(3) { transform: rotate(-2deg) translateY(-2px); }
+
+body.theme-p5 .btn-theme:hover {
+  transform: scale(1.12) rotate(-3deg);
+  border-color: #e60023;
 }
 
-.btn-theme img {
-  width: 48px;
-  height: auto;
+body.theme-p5 .btn-theme img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  background: #000;
+}
+
+/* P4 e P5 são retangulares: zoom para mostrar só a logo */
+body.theme-p5 .btn-theme:nth-child(1) img {
+  transform: scale(1);
+}
+body.theme-p5 .btn-theme:nth-child(3) img {
+  transform: scale(1.05);
 }
 
 /* ============================================================
@@ -206,12 +307,30 @@ html, body {
   gap: 20px;
 }
 
-/* Layout base genérico para os cards dos widgets */
-.hud-card {
+/* Layout base genérico para os cards dos widgets - tema Persona 5 */
+body.theme-p5 .hud-card {
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 6px 6px 0 #000;
+}
+
+/* Escalonado: cada lado numa altura/inclinação diferente */
+body.theme-p5 .widget-bottom-left .hud-card {
+  transform: rotate(-2deg) translateY(-12px);
+}
+body.theme-p5 .widget-bottom-center .hud-search-box {
+  transform: rotate(1deg);
+}
+body.theme-p5 .widget-bottom-center .info-card {
+  transform: rotate(1deg) translateY(10px);
+}
+body.theme-p5 .widget-bottom-right .hud-card {
+  transform: rotate(2deg) translateY(-8px);
 }
 
 /* Widget Inferior Esquerdo (Timer / Pomodoro) */
@@ -219,16 +338,20 @@ html, body {
   min-width: 220px;
 }
 
-.card-title {
+body.theme-p5 .card-title {
   font-size: 1rem;
   letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #e60023;
 }
 
-.timer-display {
+body.theme-p5 .timer-display {
   font-size: 2.6rem;
   font-weight: 900;
   text-align: center;
   letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 3px 3px 0 #e60023;
 }
 
 .timer-controls {
@@ -251,11 +374,19 @@ html, body {
   gap: 8px;
 }
 
-.hud-search-box input {
+body.theme-p5 .hud-search-box input {
   flex: 1;
   padding: 8px 12px;
   outline: none;
   font-size: 1rem;
+  background: #000;
+  color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 #000;
+}
+
+body.theme-p5 .hud-search-box input::placeholder {
+  color: #bbb;
 }
 
 /* Card Multifuncional com Abas (Geral / Semanal / Mensal) */
@@ -266,13 +397,20 @@ html, body {
   padding-bottom: 4px;
 }
 
-.tab-btn {
+body.theme-p5 .tab-btn {
   background: transparent;
   border: none;
   padding: 4px 10px;
   cursor: pointer;
   font-weight: bold;
   font-size: 0.9rem;
+  color: #fff;
+}
+
+body.theme-p5 .tab-btn.active {
+  background: #fff;
+  color: #000;
+  transform: rotate(-2deg);
 }
 
 .tab-pane {
@@ -284,11 +422,16 @@ html, body {
   display: none !important;
 }
 
-.metric-row {
+body.theme-p5 .metric-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
   font-size: 0.95rem;
+  color: #fff;
+}
+
+body.theme-p5 .metric-row strong {
+  color: #fff;
 }
 
 /* Widget Inferior Direito (Player de Música) */
@@ -296,13 +439,100 @@ html, body {
   min-width: 250px;
 }
 
-.track-info {
+body.theme-p5 .track-info {
   display: flex;
   align-items: center;
   gap: 8px;
   overflow: hidden;
   max-width: 230px;
   white-space: nowrap;
+  color: #fff;
+}
+
+body.theme-p5 #track-title {
+  color: #fff;
+}
+
+body.theme-p5 .volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+body.theme-p5 .volume-controls input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 10px;
+  background: #000;
+  border: 2px solid #fff;
+  box-shadow: 2px 2px 0 #000;
+  outline: none;
+  cursor: pointer;
+}
+
+body.theme-p5 .volume-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 22px;
+  background: #e60023;
+  border: 2px solid #fff;
+  box-shadow: 2px 2px 0 #000;
+  transform: rotate(-8deg);
+  cursor: pointer;
+}
+
+body.theme-p5 .volume-controls input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 20px;
+  background: #e60023;
+  border: 2px solid #fff;
+  border-radius: 0;
+  box-shadow: 2px 2px 0 #000;
+  transform: rotate(-8deg);
+  cursor: pointer;
+}
+
+body.theme-p5 .volume-controls input[type="range"]::-moz-range-track {
+  height: 10px;
+  background: #000;
+  border: 2px solid #fff;
+}
+
+.hud-search-box {
+  position: relative;
+  z-index: 200;
+}
+
+body.theme-p5 .city-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #000;
+  border: 3px solid #fff;
+  box-shadow: 5px 5px 0 #000;
+  z-index: 100;
+  margin-top: 4px;
+}
+
+body.theme-p5 .city-suggestions button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+body.theme-p5 .city-suggestions button:hover {
+  background: #e60023;
+  color: #fff;
 }
 
 .player-controls {
@@ -312,20 +542,59 @@ html, body {
   margin-top: 4px;
 }
 
-/* Botões Globais HUD */
-.hud-btn {
+/* Botões Globais HUD - tema Persona 5 */
+body.theme-p5 .hud-btn {
   padding: 6px 14px;
   cursor: pointer;
   font-weight: bold;
-  border: none;
-  transition: opacity 0.2s ease;
+  border: 2px solid #fff;
+  background: #000;
+  color: #fff;
+  box-shadow: 3px 3px 0 #000;
+  transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.hud-btn:hover {
+body.theme-p5 .hud-btn:hover {
   opacity: 0.85;
+  background: #e60023;
+  border-color: #fff;
+  transform: rotate(-2deg) scale(1.05);
 }
 
 /* Utilitário para ocultar elementos */
 .hidden {
   display: none !important;
 }
+
+/* ============================================================
+   TRANSIÇÃO ANIMADA ENTRE TEMAS (js/transitions.js)
+   Overlay em tela cheia: vídeo com chroma-key (P5, fundo verde
+   vira transparência sobre base vermelha/preta) ou direto (P3).
+   ============================================================ */
+#theme-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: all;
+}
+
+#theme-transition.fading { opacity: 0; }
+
+#transition-bg {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transition: opacity 0.45s ease;
+}
+
+#transition-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#transition-video { display: none; }

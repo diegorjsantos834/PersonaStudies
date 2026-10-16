@@ -1,0 +1,342 @@
+/* ============================================================
+   PERSONA3.CSS - Todo o visual do tema PERSONA 3 RELOAD
+   Só vale com body.theme-p3: relógio com lua, data, diálogo
+   azul-escuro nos widgets de baixo, player e autocomplete.
+   ============================================================ */
+/* PERSONA 3 RELOAD - tema azul (só ativo com body.theme-p3) */
+#p3-clock { display: none; }
+#p3-date { display: none; }
+
+body.theme-p3 #p5-calendar { display: none; }
+
+/* Relógio vai para o topo-direita, abaixo dos logos */
+body.theme-p3 .widget-top-center {
+  left: auto;
+  right: 0;
+  top: 100px;
+  transform: none;
+}
+
+body.theme-p3 .city-clock-badge {
+  background: linear-gradient(135deg, rgba(10,60,120,.92), rgba(27,154,214,.88));
+  border: 2px solid #bfe9ff;
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  box-shadow: 0 0 18px rgba(27,154,214,.55);
+  padding: 8px 14px;
+  padding-right: 44px;
+  margin-right: -30px;
+}
+
+body.theme-p3 #current-city-name,
+body.theme-p3 #digital-clock { display: none; }
+
+body.theme-p3 #p3-clock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.theme-p3 #p3-time {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(255,255,255,.6);
+  line-height: 1;
+}
+
+body.theme-p3 .p3-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+body.theme-p3 #p3-quarter { color: #ffe600; }
+body.theme-p3 #p3-weekday { color: #fff; }
+body.theme-p3 #p3-period { color: #7df3ff; }
+
+body.theme-p3 #p3-moon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffe600;
+  box-shadow: 0 0 14px rgba(255,230,0,.7);
+  position: relative;
+  overflow: hidden;
+  flex: none;
+}
+
+body.theme-p3 #p3-moon-shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  border-radius: 50%;
+  background: #0a0a12;
+}
+
+/* Data estilo P3 no topo-esquerdo */
+body.theme-p3 #p3-date {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+body.theme-p3 #p3-date-num {
+  font-size: 3rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  text-shadow: 2px 2px 0 #0a86c8, -1px -1px 0 #0a86c8;
+}
+
+body.theme-p3 #p3-date-wd {
+  display: none;
+}
+
+body.theme-p3 #p3-city {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 #0a2a5e;
+}
+
+/* Canvas de som P3: tela cheia atrás dos personagens */
+body.theme-p3 .wallpaper_layers_containers section.layer_canva_sounds {
+  z-index: 4;
+}
+
+body.theme-p3 .wallpaper_layers_containers section.layer_characters {
+  z-index: 5;
+}
+
+/* P3: personagens sentados no banco — centralizados, base na altura do assento */
+body.theme-p3 .wallpaper_layers_containers section.layer_characters {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 24px;
+}
+
+body.theme-p3 .wallpaper_layers_containers section.layer_characters img.wp-p3 {
+  max-height: 66vh;
+  transform: scale(1.45);
+  transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
+  mask-image: linear-gradient(180deg, #000 86%, transparent 99%);
+}
+
+/* Personagem P3 com borda azul (fica acima do trem: z4 > z3) */
+body.theme-p3 .wallpaper_layers_containers section.layer_characters img.wp-p3 {
+  filter: drop-shadow(7px 7px 0 #1b9ad6) drop-shadow(13px 13px 0 #06283f);
+}
+
+/* Cards: caixa de diálogo P3 — azul-marinho translúcido, texto branco */
+body.theme-p3 .hud-card {
+  background: rgba(8, 25, 60, 0.85);
+  color: #fff;
+  border: 1px solid rgba(125, 243, 255, 0.6);
+  border-left: 6px solid #1b9ad6;
+  border-radius: 6px;
+  box-shadow: 0 0 16px rgba(27, 154, 214, 0.45);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.theme-p3 .card-title {
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: #7df3ff;
+}
+
+body.theme-p3 .timer-display {
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(125, 243, 255, 0.7);
+}
+
+body.theme-p3 .metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #06283f;
+}
+body.theme-p3 .metric-row strong { color: #fff; }
+
+body.theme-p3 .metric-row span { color: #cfeaff; }
+
+/* Abas como opções de resposta: pílulas brancas, texto escuro */
+body.theme-p3 .tab-btn {
+  background: #f2fbff;
+  color: #0a2a5e;
+  border: 2px solid #0a86c8;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.theme-p3 .tab-btn.active {
+  background: #0a86c8;
+  color: #fff;
+}
+
+/* Busca */
+body.theme-p3 .hud-search-box input {
+  background: #fff;
+  color: #06283f;
+  border: 2px solid #0a86c8;
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+body.theme-p3 .city-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+body.theme-p3 .city-suggestions button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #f2fbff;
+  color: #0a2a5e;
+  border: 2px solid #0a86c8;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 rgba(4, 22, 46, 0.8);
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+body.theme-p3 .city-suggestions button:hover { background: #0a86c8; color: #fff; }
+
+/* Botões como opções de resposta: brancos, texto escuro */
+body.theme-p3 .hud-btn {
+  background: #f2fbff;
+  color: #0a2a5e;
+  border: 2px solid #0a86c8;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.theme-p3 .hud-btn:hover { background: #0a86c8; color: #fff; }
+
+/* Seletor de temas: botões uniformes */
+body.theme-p3 .theme-selector-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+body.theme-p3 .btn-theme {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #0a2a5e;
+  border-radius: 10px;
+  background: #000;
+  cursor: pointer;
+}
+
+body.theme-p3 .btn-theme img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+body.theme-p3 .btn-theme:nth-child(1) img { transform: scale(1); }
+body.theme-p3 .btn-theme:nth-child(3) img { transform: scale(1.05); }
+
+/* Player segue o mesmo diálogo escuro */
+body.theme-p3 .music-card {
+  border-radius: 6px;
+}
+
+body.theme-p3 .track-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  max-width: 230px;
+  white-space: nowrap;
+  color: #7df3ff;
+  background: #04162e;
+  border: 1px solid rgba(125, 243, 255, 0.5);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+body.theme-p3 #track-title { color: #7df3ff; }
+
+body.theme-p3 .player-controls .hud-btn {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: #f2fbff;
+  color: #0a2a5e;
+  border: 2px solid #0a86c8;
+}
+
+body.theme-p3 .volume-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+body.theme-p3 .volume-controls input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 10px;
+  background: #04162e;
+  border: 1px solid rgba(125, 243, 255, 0.6);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+body.theme-p3 .volume-controls input[type="range"]::-webkit-slider-thumb {
+  background: #f2fbff;
+  border: 2px solid #0a86c8;
+  border-radius: 50%;
+  transform: none;
+}
+
+body.theme-p3 .volume-controls input[type="range"]::-moz-range-thumb {
+  background: #f2fbff;
+  border: 2px solid #0a86c8;
+  border-radius: 50%;
+  transform: none;
+}
+
+body.theme-p3 .volume-controls input[type="range"]::-moz-range-track {
+  background: #04162e;
+  border: 1px solid rgba(125, 243, 255, 0.6);
+}

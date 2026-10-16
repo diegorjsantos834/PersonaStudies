@@ -1,0 +1,58 @@
+/* ============================================================
+   P5_CALENDAR.CSS - Calendário Persona 5 por sprites
+   Só vale com body.theme-p5. Números/mês/semana/clima são recortes
+   das sheets em assets/images/p5/ posicionados por js/p5calendar.js.
+   ============================================================ */
+/* P5 calendar - port fiel da referência (só ativo com body.theme-p5) */
+body.theme-p5 #p5-calendar { position: relative; }
+body.theme-p5 #p5-calendar .datebox {
+  transform: scale(1.2);
+  position: relative;
+  display: grid;
+  grid-template-columns: 0px 0px 60px 62px 70px;
+  grid-template-rows: 0px 0px 108px 0px;
+  justify-content: center;
+  gap: 0px;
+  margin: 20px 0px 100px 0px;
+}
+body.theme-p5 .month-base,body.theme-p5 .month-mid,body.theme-p5 .month-top{
+  background: url('../assets/images/p5/month-number-sprites.png');
+  background-position: 0px 0px;
+  width: 120px; height: 120px; padding:0; margin:30px 0 0 0;
+  transform: rotate(-20deg); position:relative;
+}
+body.theme-p5 .month-base{ z-index:10; grid-column:2; grid-row:3; }
+body.theme-p5 .month-mid{ z-index:100; grid-column:2; grid-row:2; }
+body.theme-p5 .month-top{ z-index:10001; grid-column:2; grid-row:1; }
+body.theme-p5 .date-tens-top,body.theme-p5 .date-tens-mid,body.theme-p5 .date-tens-base{
+  background: url('../assets/images/p5/numbers_spritesheet_3.png');
+  width:100px; height:150px; padding:0; margin:0 -8px 0 0; position:relative;
+  transform: rotate(-10deg); grid-column:4;
+}
+body.theme-p5 .date-tens-top{ z-index:10001; grid-row:1; }
+body.theme-p5 .date-tens-mid{ z-index:100; grid-row:2; }
+body.theme-p5 .date-tens-base{ z-index:10; grid-row:3; }
+body.theme-p5 .date-ones-top,body.theme-p5 .date-ones-mid,body.theme-p5 .date-ones-base{
+  background: url('../assets/images/p5/numbers_spritesheet_3.png');
+  width:100px; height:150px; padding:0; margin:-20px 0 0 -18px; position:relative;
+  transform: rotate(-10deg); grid-column:5;
+}
+body.theme-p5 .date-ones-top{ z-index:10002; grid-row:1; }
+body.theme-p5 .date-ones-mid{ z-index:101; grid-row:2; }
+body.theme-p5 .date-ones-base{ z-index:11; grid-row:3; }
+body.theme-p5 #p5-calendar .weekday-sprite{
+  background: url('../assets/images/p5/weekday_sprites.png');
+  width:191px; height:74px; padding:0; margin:-20px 0 0 10px; position:relative;
+  z-index:10001; grid-column:4; grid-row:4; transform: rotate(-10deg);
+}
+body.theme-p5 #p5-calendar .weather-card{
+  background: url('../assets/images/p5/weather-card-sprite.png');
+  width:100px; height:99px; grid-column:6; grid-row:1; margin:-10px 0 0 -8px;
+}
+body.theme-p5 #p5-calendar .current-weather-sprite{
+  background: url('../assets/images/p5/weather_spritesheet4.png');
+  width:75px; height:72px; position:relative; z-index:1000;
+  grid-column:6; grid-row:2; margin:-2px 0 0 6px;
+}
+body.theme-p5 #p5-calendar .hud-temp-container{ position:absolute; left:262px; top:102px; font-size:.85rem; font-weight:900; font-style:italic; color:#fff; background:#000; padding:2px 10px; transform: rotate(-6deg) skewX(-12deg); z-index:10002; text-shadow:2px 2px 0 #000; }
+.hidden{ display:none !important; }

@@ -4,33 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persona Study</title>
+    <title>Persona Weather+Pomodoro</title>
+    <!-- Fontes: Anton (números P5), Arsenal (textos), Bangers (detalhes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&family=Bangers&display=swap" rel="stylesheet">
+    <!-- Ordem importa: base -> calendário P5 -> tema P3 (sobrescreve) -->
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/p5_calendar.css">
+    <link rel="stylesheet" href="css/persona3.css">
 </head>
-<!-- Tag body com classe theme para alteração de tema -->
+<!-- O tema ativo vive aqui: theme-p5 ou theme-p3 (troca via switchTheme) -->
 
-<body class="theme">
+<body class="theme-p5">
 
-    <!-- Conteúdo principal -->
+    <!-- Palco: wallpaper em camadas + HUD por cima -->
     <main class="desktop">
 
-        <!--  1º Grupo de camadas para o wallpaper (3d parallax) -->
+        <!-- Wallpaper em 5 camadas com parallax (intensidade em js/widgets.js).
+             Cada camada tem a versão P5 (wp-p5) e P3 (wp-p3); o CSS mostra
+             só a do tema ativo. Imagem ausente se esconde sozinha (onerror). -->
         <div class="wallpaper_layers_containers">
 
-            <!-- Camada 0: Cor padrão -->
+            <!-- Camada 0: fundo liso (cor do body) -->
             <section class="layer_base_bg"></section>
 
-            <!-- Camada 1: cenario animado -->
-            <section class="layer_animated_scenery"></section>
+            <!-- Camada 1: cenário com pan horizontal (P5: cidade / P3: nuvens) -->
+            <section class="layer_animated_scenery"><img class="wp-p5" src="assets/images/wallpapers/p5_city.png" alt="Cidade" onerror="this.style.display='none'" /><img class="wp-p3" src="assets/images/wallpapers/p3_clouds.jpg" alt="Nuvens" onerror="this.style.display='none'" /></section>
 
-            <!-- Camada 2: Canva sounds -->
-            <section class="layer_canva_sounds"></section>
+            <!-- Camada 2: linha de áudio (js/sound-canvas.js) -->
+            <section class="layer_canva_sounds"><canvas id="sound-canvas"></canvas></section>
 
-            <!-- Camada 3: Cenario estático -->
-            <section class="layer_static_scenery"></section>
+            <!-- Camada 3: cenário estático (P5: listras / P3: trem) -->
+            <section class="layer_static_scenery"><img class="wp-p5" src="assets/images/wallpapers/statics/p5_static.png" alt="Wallpaper" onerror="this.style.display='none'" /><img class="wp-p3" src="assets/images/wallpapers/statics/p3_train.png" alt="Monorail" onerror="this.style.display='none'" /></section>
 
-            <!-- Camada 4: Personagens -->
-            <section class="layer_characters"></section>
+            <!-- Camada 4: personagens (P5: Joker / P3: Makoto) -->
+            <section class="layer_characters"><img class="wp-p5" src="assets/images/characters/Joker_png.png" alt="Joker" onerror="this.style.display='none'" /><img class="wp-p3" src="assets/images/characters/makoto_p3.png" alt="Makoto" onerror="this.style.display='none'" /></section>
 
         </div>
 
@@ -45,26 +54,25 @@
                 <!-- Cycle_day + weather -->
                 <div class="widget-top-left">
                     <div class="calendar-hud">
-                        <div class="date-display-box">
-                            <span id="hud-date-num">7/22</span>
-
-                            <!-- Adicionado o elemento para os graus -->
+                        <div id="p3-date"><span id="p3-date-num">10/16</span><span id="p3-date-wd">THU</span><span id="p3-city">SÃO PAULO</span></div>
+                        <div id="p5-calendar">
+                            <div class="datebox">
+                                <div class="month-top"></div>
+                                <div class="month-mid"></div>
+                                <div class="month-base"></div>
+                                <div class="date-tens-top"></div>
+                                <div class="date-tens-mid"></div>
+                                <div class="date-tens-base"></div>
+                                <div class="date-ones-top"></div>
+                                <div class="date-ones-mid"></div>
+                                <div class="date-ones-base"></div>
+                                <div class="weekday-sprite"></div>
+                                <div class="weather-card"></div>
+                                <div class="current-weather-sprite"></div>
+                            </div>
                             <div class="hud-temp-container">
                                 <span id="hud-temp-val">24°C</span>
                             </div>
-
-                            <div id="hud-weather-icon" class="weather-emblem">☀️</div>
-                        </div>
-                        <div class="weekday-display-tag">
-                            <span id="hud-day-name">WedNESDay</span>
-                            <span id="hud-kanji">水</span>
-                        </div>
-                        <div class="timephase-display-tag">
-                            <span id="hud-period">Daytime</span>
-                        </div>
-                        <!-- Alerta de Clima (Ex: Heat Wave) -->
-                        <div id="hud-weather-warning" class="warning-tag hidden">
-                            <span id="warning-text">HEAT WAVE!</span>
                         </div>
                     </div>
                 </div>
@@ -75,6 +83,15 @@
                     <div class="city-clock-badge">
                         <h1 id="current-city-name">SÃO PAULO</h1>
                         <div id="digital-clock">19:31:05</div>
+                        <div id="p3-clock">
+                            <span id="p3-time">19:31</span>
+                            <div class="p3-meta">
+                                <span id="p3-quarter">QUARTER</span>
+                                <span id="p3-weekday">Tue</span>
+                                <span id="p3-period">Evening</span>
+                            </div>
+                            <div id="p3-moon"><div id="p3-moon-shadow"></div></div>
+                        </div>
                     </div>
                 </div>
 
@@ -87,9 +104,6 @@
                         </button>
                         <button class="btn-theme btn-theme-p3" onclick="switchTheme('p3')" title="Persona 3">
                             <img src="assets/images/logos/p3_logo.jpg" alt="Persona 3" />
-                        </button>
-                        <button class="btn-theme btn-theme-p4" onclick="switchTheme('p4')" title="Persona 4">
-                            <img src="assets/images/logos/p4_logo.jpg" alt="Persona 4" />
                         </button>
                     </nav>
                 </div>
@@ -119,14 +133,14 @@
                     <form id="weather-search-form" class="hud-search-box">
                         <input type="text" id="city-input" placeholder="Buscar Cidade..." autocomplete="off" />
                         <button type="submit" class="hud-btn">BUSCAR</button>
+                        <div id="city-suggestions" class="city-suggestions hidden"></div>
                     </form>
             
-                    <!-- Card com abas (Geral, Semanal, Mensal) -->
+                    <!-- Card com abas (Geral, Semanal) -->
                     <div class="hud-card info-card">
                         <div class="card-tabs">
                             <button class="tab-btn active" data-tab="general">Geral</button>
                             <button class="tab-btn" data-tab="weekly">Semanal</button>
-                            <button class="tab-btn" data-tab="monthly">Mensal</button>
                         </div>
             
                         <div class="card-content">
@@ -140,10 +154,6 @@
                             <div id="tab-weekly" class="tab-pane hidden">
                                 <div id="weekly-forecast-list" class="forecast-grid"></div>
                             </div>
-                            <!-- Aba Mensal -->
-                            <div id="tab-monthly" class="tab-pane hidden">
-                                <div id="monthly-calendar-view" class="calendar-grid"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,13 +163,15 @@
                 <div class="widget-bottom-right">
                     <div class="hud-card music-card">
                         <div class="track-info">
-                            <span class="music-icon">🎵</span>
-                            <marquee id="track-title" behavior="scroll" direction="left">Persona 5 - Last Surprise</marquee>
+                            <marquee id="track-title" behavior="scroll" direction="left">Persona 3 Reload - Its Going Down Now</marquee>
                         </div>
                         <div class="player-controls">
                             <button id="prev-track" class="hud-btn">⏮</button>
                             <button id="play-pause-track" class="hud-btn">▶</button>
                             <button id="next-track" class="hud-btn">⏭</button>
+                        </div>
+                        <div class="volume-controls">
+                            <input type="range" id="volume-slider" min="0" max="100" value="80" aria-label="Volume" />
                         </div>
                         <!-- Áudio oculto conectado à Web Audio API -->
                         <audio id="persona-audio-player" crossOrigin="anonymous"></audio>
@@ -174,6 +186,21 @@
 
 
     </main>
+
+
+    <!-- Transição animada entre temas (js/transitions.js) -->
+    <div id="theme-transition" class="hidden">
+        <div id="transition-bg"></div>
+        <canvas id="transition-canvas"></canvas>
+        <video id="transition-video" muted playsinline preload="auto"></video>
+    </div>
+
+    <!-- Script com toda a lógica dos widgets -->
+    <script src="js/widgets.js"></script>
+    <script src="js/p5calendar.js"></script>
+    <script src="js/persona3.js"></script>
+    <script src="js/sound-canvas.js"></script>
+    <script src="js/transitions.js"></script>
 
 
 </body>
