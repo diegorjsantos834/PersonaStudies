@@ -546,8 +546,8 @@ async function fetchCurrentWeather(city) {
         throw new Error("API key não configurada");
     }
 
-    // Constrói a URL da API
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${OWM_API_KEY}&units=metric&lang=pt_br`;
+    // Constrói a URL do arquivo PHP que consulta a API pública
+    const url = `php/weather.php?city=${encodeURIComponent(city)}`;
 
     // Realiza a requisição
     const response = await fetch(url);
@@ -579,8 +579,8 @@ async function fetchForecast(city) {
         throw new Error("API key não configurada");
     }
 
-    // Constrói a URL da API (forecast retorna previsões a cada 3 horas, 5 dias)
-    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${OWM_API_KEY}&units=metric&lang=pt_br`;
+    // Constrói a URL do arquivo PHP que consulta a API pública (forecast)
+    const url = `php/forecast.php?city=${encodeURIComponent(city)}`;
 
     // Realiza a requisição
     const response = await fetch(url);
@@ -756,7 +756,7 @@ if (cityInputEl && citySuggestionsEl) {
         }
         citySuggestTimer = setTimeout(async () => {
             try {
-                const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(q)}&limit=5&appid=${OWM_API_KEY}`;
+                const url = `php/geo.php?q=${encodeURIComponent(q)}`;
                 const res = await fetch(url);
                 if (!res.ok) return;
                 const places = await res.json();
