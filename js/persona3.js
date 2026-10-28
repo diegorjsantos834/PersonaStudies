@@ -1,7 +1,8 @@
-// PERSONA3.JS - Relógio, data e fase da lua do tema P3 (só visível com body.theme-p3)
-// Atualiza a cada segundo: #p3-time (HH:MM), #p3-period, #p3-weekday,
-// #p3-date-num (M/D) e a sombra da lua (#p3-moon-shadow) pela fase real.
-// Também espelha a cidade buscada em #p3-city.
+// persona3.js — relógio, data e lua do tema P3
+// Não faz nada se o body não tiver a classe theme-p3.
+// A cada segundo ele atualiza a hora, o período (Morning/Evening...),
+// o dia da semana, a data e a fase da lua.
+// A cidade ali no canto é só um espelho do que foi buscado no widget de clima.
 console.log('persona3.js');
 
 function p3IsActive() {
@@ -15,7 +16,7 @@ function p3Period(h) {
   return 'Night';
 }
 
-// Fração iluminada + lado da sombra (0=new, 0.5=full)
+// Quanto da lua está acesa (0 = nova, 1 = cheia) e de que lado ela está
 function p3Moon() {
   const synodic = 29.53058867;
   const ref = Date.UTC(2000, 0, 6, 18, 14) / 86400000;
@@ -28,16 +29,18 @@ function p3Moon() {
 function updateP3() {
   if (!p3IsActive()) return;
   const now = new Date();
+  const h = now.getHours();
+  const min = now.getMinutes();
 
   const timeEl = document.getElementById('p3-time');
   if (timeEl) {
     timeEl.textContent =
-      String(now.getHours()).padStart(2, '0') + ':' +
-      String(now.getMinutes()).padStart(2, '0');
+      String(h).padStart(2, '0') + ':' +
+      String(min).padStart(2, '0');
   }
 
   const periodEl = document.getElementById('p3-period');
-  if (periodEl) periodEl.textContent = p3Period(now.getHours());
+  if (periodEl) periodEl.textContent = p3Period(h);
 
   const wdEl = document.getElementById('p3-weekday');
   if (wdEl) {
@@ -56,10 +59,15 @@ function updateP3() {
   const srcCity = document.getElementById('current-city-name');
   if (p3City && srcCity && srcCity.textContent) p3City.textContent = srcCity.textContent;
 
+  // de dia a bola fica amarela (sol), de noite ela escurece e só a parte
+  // iluminada da lua aparece clara
+  const moonEl = document.getElementById('p3-moon');
+  if (moonEl) moonEl.classList.toggle('is-night', h >= 18 || h < 5);
+
   const shadow = document.getElementById('p3-moon-shadow');
   if (shadow) {
     const { illum, waxing } = p3Moon();
-    const off = Math.round(-illum * 100); // -100% (cheia) .. 0% (nova)
+    const off = Math.round(-illum * 100); // -100 = cheia (sai toda), 0 = nova (fica toda coberta)
     shadow.style.left = waxing ? off + '%' : 'auto';
     shadow.style.right = waxing ? 'auto' : off + '%';
   }

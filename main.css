@@ -1,14 +1,11 @@
-/* ============================================================
-   MAIN.CSS - Base neutra + visual do tema PERSONA 5
-   - Seções 1-6: layout neutro (funciona em qualquer tema)
-   - Regras "body.theme-p5 ...": visual P5 (cards pretos, botões,
-     busca, player, seletor de temas) — some ao trocar de tema
-   - Camadas do wallpaper: seções com 104% (sobra p/ o parallax),
-     .wp-p5/.wp-p3 alternam a imagem por tema
-   ============================================================ */
-/* ============================================================
-   1. RESET & CONFIGURAÇÕES GERAIS DA TELA
-   ============================================================ */
+/* main.css - base que vale pros dois temas + o visual do P5.
+   As regras "body.theme-p5 ..." só aparecem no tema P5 e somem na troca.
+   As camadas de wallpaper ficam com 104% de sobra pro parallax não expor
+   as bordas, e .wp-p5/.wp-p3 trocam a imagem conforme o tema. */
+
+/* ----------------------------------------------------
+   1. RESET / GERAL
+   ---------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -34,9 +31,9 @@ html, body {
   letter-spacing: 0.15em;
 }
 
-/* ============================================================
-   2. STAGE PRINCIPAL DA ÁREA DE TRABALHO (DESKTOP)
-   ============================================================ */
+/* ----------------------------------------------------
+   2. ÁREA DE TRABALHO (DESKTOP)
+   ---------------------------------------------------- */
 .desktop {
   position: relative;
   width: 100vw;
@@ -44,9 +41,9 @@ html, body {
   overflow: hidden;
 }
 
-/* ============================================================
-   3. CAMADAS DE WALLPAPER & PARALLAX 3D
-   ============================================================ */
+/* ----------------------------------------------------
+   3. CAMADAS DE WALLPAPER & PARALLAX
+   ---------------------------------------------------- */
 .wallpaper_layers_containers {
   position: absolute;
   top: 0;
@@ -161,9 +158,9 @@ body.theme-p3 {
   background-color: #0a1428;
 }
 
-/* ============================================================
-   4. CONTAINER DA INTERFACE E WIDGETS (HUD)
-   ============================================================ */
+/* ----------------------------------------------------
+   4. WIDGETS (HUD)
+   ---------------------------------------------------- */
 .ui_overlay_container {
   position: relative;
   width: 100%;
@@ -181,9 +178,9 @@ body.theme-p3 {
   pointer-events: auto;
 }
 
-/* ============================================================
+/* ----------------------------------------------------
    5. SEÇÃO SUPERIOR (.top)
-   ============================================================ */
+   ---------------------------------------------------- */
 .top {
   display: flex;
   justify-content: space-between;
@@ -296,9 +293,9 @@ body.theme-p5 .btn-theme:nth-child(3) img {
   transform: scale(1.05);
 }
 
-/* ============================================================
+/* ----------------------------------------------------
    6. SEÇÃO INFERIOR (.bottom)
-   ============================================================ */
+   ---------------------------------------------------- */
 .bottom {
   display: flex;
   justify-content: space-between;
@@ -566,11 +563,9 @@ body.theme-p5 .hud-btn:hover {
   display: none !important;
 }
 
-/* ============================================================
-   TRANSIÇÃO ANIMADA ENTRE TEMAS (js/transitions.js)
-   Overlay em tela cheia: vídeo com chroma-key (P5, fundo verde
-   vira transparência sobre base vermelha/preta) ou direto (P3).
-   ============================================================ */
+/* Transição entre temas (js/transitions.js): overlay de tela cheia.
+   No P5 o vídeo tem chroma-key (fundo verde vira transparência sobre a base
+   vermelha/preta); no P3 entra direto. */
 #theme-transition {
   position: fixed;
   inset: 0;

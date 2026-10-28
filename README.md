@@ -2,7 +2,7 @@
 
 Interface web com temas visuais de **Persona 5** e **Persona 3 Reload**, desenvolvida como projeto acadêmico para a disciplina de **PW2** (Programação Web 2).
 
-O projeto realiza requisições HTTP para uma API pública (OpenWeatherMap), recebe dados em formato JSON, processa-os via **PHP** e apresenta dinamicamente ao usuário.
+O projeto realiza requisições HTTP para a API do OpenWeatherMap, recebe dados em formato JSON, processa-os via **PHP** e apresenta dinamicamente ao usuário.
 
 ---
 
@@ -14,7 +14,7 @@ Atender aos requisitos obrigatórios:
 - [x] Formulário com campo de pesquisa
 - [x] Botão de consulta
 - [x] Área para apresentação dos resultados
-- [x] **PHP** realiza requisição HTTP para API pública
+- [x] **PHP** realiza requisição HTTP para a API do OpenWeatherMap
 - [x] Recebe dados no formato **JSON**
 - [x] Interpreta o JSON com `json_decode()`
 - [x] Apresenta os dados dinamicamente ao usuário
@@ -27,8 +27,8 @@ Atender aos requisitos obrigatórios:
 |------------|------------|
 | HTML5 / CSS3 | Estrutura e visual da interface |
 | JavaScript (Vanilla JS) | Lógica interativa, fetch, temas, parallax, canvas |
-| PHP | Requisição HTTP para API pública (cURL / file_get_contents) |
-| API OpenWeatherMap | Fonte de dados públicos (clima atual, previsão, autocomplete) |
+| PHP | Requisição HTTP para a API do OpenWeatherMap (cURL / file_get_contents) |
+| API OpenWeatherMap | Fonte dos dados (clima atual, previsão, autocomplete) |
 | JSON | Formato de troca de dados entre PHP e JavaScript |
 
 ---
@@ -52,7 +52,7 @@ PersonaStudies/
 │   ├── sound-canvas.js         → Visualizador de áudio (canvas)
 │   └── transitions.js          → Transição animada entre temas
 │
-├── php/                        → PHP consulta a API pública
+├── php/                        → PHP consulta a API do OpenWeatherMap
 │   ├── weather.php             → Clima atual (OpenWeatherMap)
 │   ├── forecast.php            → Previsão semanal (OpenWeatherMap)
 │   └── geo.php                 → Autocomplete de cidades (OpenWeatherMap)
@@ -76,7 +76,7 @@ PersonaStudies/
 
 ```
 ┌─────────────────┐      GET       ┌──────────────────┐      GET       ┌──────────────────┐
-│  JavaScript     │ ─────────────→ │  PHP             │ ─────────────→ │  API Pública     │
+│  JavaScript     │ ─────────────→ │  PHP             │ ─────────────→ │  OpenWeatherMap  │
 │  (widgets.js)   │                │  (php/*.php)     │                │  (OpenWeatherMap)│
 │                 │ ←───────────── │                  │ ←───────────── │                  │
 │  Exibe na tela  │   JSON         │  json_decode()   │   JSON         │  Retorna dados  │
@@ -87,7 +87,7 @@ PersonaStudies/
 
 1. **Usuário** digita uma cidade no campo de busca
 2. **JavaScript** (`js/widgets.js`) chama `php/weather.php?city=...`
-3. **PHP** faz requisição HTTP (cURL) para a API pública do OpenWeatherMap
+3. **PHP** faz requisição HTTP (cURL) para a API do OpenWeatherMap
 4. **API** retorna os dados em JSON
 5. **PHP** interpreta o JSON com `json_decode()` e devolve com `json_encode()`
 6. **JavaScript** recebe o JSON e exibe os dados dinamicamente na interface
@@ -129,7 +129,7 @@ Acesse diretamente no navegador para verificar se o PHP está funcionando:
 | `http://localhost/PersonaStudies/php/forecast.php?city=Rio de Janeiro` | JSON com previsão semanal |
 | `http://localhost/PersonaStudies/php/geo.php?q=Sao` | JSON com sugestões de cidades |
 
-Se retornar JSON, o PHP está consultando a API pública corretamente.
+Se retornar JSON, o PHP está consultando a API do OpenWeatherMap corretamente.
 
 ---
 
@@ -141,7 +141,7 @@ Se retornar JSON, o PHP está consultando a API pública corretamente.
 | Formulário com campo de pesquisa | OK | `index.html` — `#weather-search-form` + `#city-input` |
 | Botão de consulta | OK | `index.html` — botão "Buscar" no formulário |
 | Área para resultados | OK | `index.html` — `#temp-val`, `#humidity-val`, `#condition-val`, `#weekly-forecast-list` |
-| PHP consulta API pública | OK | `php/weather.php`, `php/forecast.php`, `php/geo.php` |
+| PHP consulta a API do OpenWeatherMap | OK | `php/weather.php`, `php/forecast.php`, `php/geo.php` |
 | Recebe JSON | OK | PHP recebe resposta da API |
 | Interpreta JSON | OK | `json_decode()` nos arquivos PHP |
 | Apresenta dinamicamente | OK | JavaScript exibe os dados na interface |

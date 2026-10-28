@@ -1,9 +1,7 @@
-/* ============================================================
-   P5_CALENDAR.CSS - Calendário Persona 5 por sprites
-   Só vale com body.theme-p5. Números/mês/semana/clima são recortes
-   das sheets em assets/images/p5/ posicionados por js/p5calendar.js.
-   ============================================================ */
-/* P5 calendar - port fiel da referência (só ativo com body.theme-p5) */
+/* p5_calendar.css - calendário do P5 feito por sprites.
+   Vale só com body.theme-p5. Os números, mês, semana e clima são recortes
+   das sheets em assets/images/p5/, posicionados pelo js/p5calendar.js. */
+/* port fiel da referência */
 body.theme-p5 #p5-calendar { position: relative; }
 body.theme-p5 #p5-calendar .datebox {
   transform: scale(1.2);

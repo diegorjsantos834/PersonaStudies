@@ -1,9 +1,6 @@
-/* ============================================================
-   PERSONA3.CSS - Todo o visual do tema PERSONA 3 RELOAD
-   Só vale com body.theme-p3: relógio com lua, data, diálogo
-   azul-escuro nos widgets de baixo, player e autocomplete.
-   ============================================================ */
-/* PERSONA 3 RELOAD - tema azul (só ativo com body.theme-p3) */
+/* persona3.css — todo o visual do tema P3 Reload
+   Nada aqui aparece se o body não tiver a classe theme-p3.
+   Tem o relógio com a lua, a data, os cards azul-escuros, o player e o autocomplete. */
 #p3-clock { display: none; }
 #p3-date { display: none; }
 
@@ -58,6 +55,8 @@ body.theme-p3 #p3-quarter { color: #ffe600; }
 body.theme-p3 #p3-weekday { color: #fff; }
 body.theme-p3 #p3-period { color: #7df3ff; }
 
+/* A bola é amarela de dia (sol). De noite o JS adiciona .is-night e ela
+   escurece — só a parte iluminada da lua continua aparecendo clara. */
 body.theme-p3 #p3-moon {
   width: 44px;
   height: 44px;
@@ -67,6 +66,15 @@ body.theme-p3 #p3-moon {
   position: relative;
   overflow: hidden;
   flex: none;
+}
+
+body.theme-p3 #p3-moon.is-night {
+  background: #0a0a12;
+  box-shadow: 0 0 14px rgba(100,140,200,.5);
+}
+
+body.theme-p3 #p3-moon.is-night #p3-moon-shadow {
+  background: #000;
 }
 
 body.theme-p3 #p3-moon-shadow {

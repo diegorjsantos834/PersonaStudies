@@ -1,25 +1,10 @@
 <?php
-// ============================================================
-// forecast.php - PHP consulta a API pública do OpenWeatherMap
-// ============================================================
-// Arquivo PHP responsável por:
-// 1. Receber o nome da cidade via GET
-// 2. Fazer a requisição HTTP (cURL ou file_get_contents) para a API pública
-// 3. Decodificar o JSON retornado com json_decode()
-// 4. Enviar o JSON processado de volta para o JavaScript com json_encode()
-//
-// Fluxo: JS (widgets.js) -> este PHP -> API OpenWeatherMap -> JSON -> JS
-// ============================================================
+// forecast.php - puxa a previsão de 5 dias no OpenWeatherMap.
+// Mesma ideia do weather.php: JS manda a cidade, a gente devolve o JSON da API.
 
-// ============================================================
-// BLOCO 1: Cabeçalhos HTTP
-// ============================================================
 header("Content-Type: application/json; charset=utf-8");
 header("Access-Control-Allow-Origin: *");
 
-// ============================================================
-// BLOCO 2: Validação do parâmetro cidade via GET
-// ============================================================
 if (!isset($_GET['city']) || trim($_GET['city']) === '') {
     http_response_code(400);
     echo json_encode(["error" => "Cidade não informada"]);
@@ -29,12 +14,9 @@ if (!isset($_GET['city']) || trim($_GET['city']) === '') {
 $city = trim($_GET['city']);
 $apiKey = "51f001c6723ac948e0ca9ef5e745afa3";
 
-// URL da API de previsão de 5 dias (dados a cada 3 horas)
+// a forecast API devolve blocos a cada 3h por 5 dias
 $url = "https://api.openweathermap.org/data/2.5/forecast?q=" . urlencode($city) . "&appid=" . $apiKey . "&units=metric&lang=pt_br";
 
-// ============================================================
-// BLOCO 3: Requisição HTTP para a API pública (cURL)
-// ============================================================
 $resposta = false;
 
 if (function_exists('curl_init')) {
@@ -46,25 +28,17 @@ if (function_exists('curl_init')) {
     curl_close($ch);
 }
 
-// ============================================================
-// BLOCO 4: Fallback com file_get_contents
-// ============================================================
+// fallback caso o cURL esteja desligado
 if ($resposta === false && function_exists('file_get_contents') && ini_get('allow_url_fopen')) {
     $resposta = @file_get_contents($url);
 }
 
-// ============================================================
-// BLOCO 5: Tratamento de erro de conexão
-// ============================================================
 if ($resposta === false) {
     http_response_code(500);
-    echo json_encode(["error" => "Erro ao consultar a API pública"]);
+    echo json_encode(["error" => "Erro ao consultar a API do OpenWeather"]);
     exit;
 }
 
-// ============================================================
-// BLOCO 6: Decodificação do JSON recebido
-// ============================================================
 $dados = json_decode($resposta, true);
 
 if ($dados === null) {
@@ -73,7 +47,4 @@ if ($dados === null) {
     exit;
 }
 
-// ============================================================
-// BLOCO 7: Retorno do JSON para o JavaScript
-// ============================================================
 echo json_encode($dados, JSON_UNESCAPED_UNICODE);

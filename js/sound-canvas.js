@@ -1,9 +1,10 @@
-// SOUND-CANVAS.JS - Linha de áudio do fundo (camada .layer_canva_sounds)
-// Sem música: onda idle animada pelo tempo. Tocando: waveform real via
-// AnalyserNode (criado no primeiro play, por causa da política de autoplay).
-// Cores por tema: P5 vermelho/preto em tela cheia; P3 branco com brilho
-// ciano. O resize() lê a caixa real do canvas a cada frame para acompanhar
-// trocas de tema sem distorcer.
+// sound-canvas.js - a linha de som que fica no fundo (camada .layer_canva_sounds).
+// Sem música tocando ela desenha uma onda parada animada pelo tempo; com música
+// ligada vira a waveform real, capturada por um AnalyserNode (criado no primeiro
+// play, porque a política de autoplay não deixa criar o AudioContext antes).
+// As cores mudam por tema: P5 é vermelho/preto em tela cheia, P3 é branco com
+// brilho ciano. O resize() lê o tamanho real do canvas a cada frame pra acompanhar
+// a troca de tema sem distorcer.
 (function () {
   const canvas = document.getElementById("sound-canvas");
   const audio = document.getElementById("persona-audio-player");

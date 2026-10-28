@@ -1,9 +1,9 @@
 console.log('p5calendar.js');
-// P5CALENDAR.JS - Calendário Persona 5 por sprites (só roda com body.theme-p5)
-// Lê mês/dia/dia-da-semana da data atual e posiciona os recortes das sheets
-// em assets/images/p5/ (mês 120x120, dias 100x150, weekday 191x74).
-// O ícone de clima (weather_spritesheet4.png) anima 3 quadros em loop e o
-// widgets.js informa a condição (sol/nuvem/chuva/neve) via animateWeatherSprites().
+// p5calendar.js - calendário do P5 por sprites (roda só com body.theme-p5).
+// Pega mês/dia/dia-da-semana de hoje e posiciona os recortes das sheets que
+// estão em assets/images/p5/ (mês 120x120, dias 100x150, weekday 191x74).
+// O ícone de clima (weather_spritesheet4.png) anima 3 quadros em loop; o
+// widgets.js avisa qual condição usar (sol/nuvem/chuva/neve) via animateWeatherSprites().
 let weatherSpriteIndex = 0;
 let weatherImageIndex = 0;
 const weatherSpriteInterval = 350;

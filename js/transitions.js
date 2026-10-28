@@ -1,8 +1,8 @@
-// TRANSITIONS.JS - Transição animada ao trocar de tema
-// P5 (3s): vídeo com fundo verde -> chroma-key via canvas sobre base
-// vermelha/preta. P3 (6s): vídeo direto, congela 1s no segundo 4.
-// A troca da classe do tema acontece com o overlay já cobrindo a tela.
-// Exige Live Server (canvas + vídeo no file:// bloqueia o getImageData).
+// transitions.js - a animação que roda quando você troca de tema.
+// P5 (3s): vídeo com fundo verde, passado por chroma-key num canvas por cima
+// da base vermelha/preta. P3 (6s): vídeo direto, e congela 1s no segundo 4.
+// A classe do tema só troca com o overlay já cobrindo a tela.
+// Precisa de Live Server (abrir no file:// trava o getImageData do canvas).
 console.log('transitions.js');
 
 (function () {
