@@ -60,7 +60,7 @@ PersonaStudies/
 │   └── geo.php                 → Autocomplete de cidades (OpenWeatherMap)
 │
 ├── json/
-│   └── openweathermap.json     → Exemplo de JSON retornado pela API
+│   └── openweathermap.json     → JSON retornado pela API
 │
 └── assets/
     ├── audio/                  → Músicas locais (player)
