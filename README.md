@@ -4,6 +4,8 @@ Interface web com temas visuais de **Persona 5** e **Persona 3 Reload**, desenvo
 
 O projeto realiza requisições HTTP para a API do OpenWeatherMap, recebe dados em formato JSON, processa-os via **PHP** e apresenta dinamicamente ao usuário.
 
+Link para o vídeo de demonstração no youtube: https://youtu.be/-ATdgGzB1lU
+
 ---
 
 ## Objetivo do Projeto
